@@ -1,0 +1,3 @@
+class Departure extends Event {
+    
+}
