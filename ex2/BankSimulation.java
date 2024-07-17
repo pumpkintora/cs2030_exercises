@@ -18,6 +18,8 @@ class BankSimulation extends Simulation {
    */
   public Event[] initEvents;
 
+  public Queue queue;
+
   /** 
    * Constructor for a bank simulation. 
    *
@@ -40,7 +42,8 @@ class BankSimulation extends Simulation {
     while (sc.hasNextDouble()) {
       double arrivalTime = sc.nextDouble();
       double serviceTime = sc.nextDouble();
-      Customer newCustomer = new Customer(id);
+      int task = sc.nextInt();
+      Customer newCustomer = new Customer(id, task);
       initEvents[id] = new Arrival(arrivalTime, newCustomer, serviceTime, available);
       id += 1;
     }
