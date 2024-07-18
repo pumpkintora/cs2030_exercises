@@ -7,5 +7,15 @@
  *
  * @author Put Your Name (Lab Group)
  */
+class LongerThan implements BooleanCondition<String> {
+    private int lengthToCompare;
 
+    public LongerThan(Integer lengthToCompare) {
+        this.lengthToCompare = lengthToCompare;
+    }
+
+    public boolean test(String str) {
+        return str.length() > lengthToCompare;
+    }
+}
 

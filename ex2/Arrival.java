@@ -40,6 +40,9 @@ class Arrival extends BankEvent {
                     new ServiceBegin(this.getTime(), this.getCustomer(), availableCounter)
             };
         } else {
+            if (!this.getBank().checkQueueFull()) {
+
+            }
             return new Event[] {
                     new Departure(this.getTime(), this.getCustomer())
             };

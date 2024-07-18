@@ -5,3 +5,6 @@
  *
  * @author Put Your Name (Lab Group)
  */
+interface BooleanCondition<T> {
+    boolean test(T t);
+}

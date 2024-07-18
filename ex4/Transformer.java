@@ -6,6 +6,8 @@
  *
  * @author Put Your Name (Lab Group)
  */
-
+interface Transformer<T, U> {
+    U transform(T t);
+}
 
 

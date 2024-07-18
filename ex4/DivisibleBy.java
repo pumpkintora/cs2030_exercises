@@ -7,5 +7,15 @@
  *
  * @author Put Your Name (Lab Group)
  */
+class DivisibleBy implements BooleanCondition<Integer> {
+    private int denominator;
 
+    public DivisibleBy(Integer denominator) {
+        this.denominator = denominator;
+    }
+
+    public boolean test(Integer intNumber) {
+        return intNumber % denominator == 0;
+    }
+}
 

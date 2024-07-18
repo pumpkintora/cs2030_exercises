@@ -19,6 +19,14 @@ class Bank {
         return null;
     }
 
+    public void queueCustomer(Customer customer) {
+        queue.enq(customer);
+    }
+
+    public Customer dequeueCustomer() {
+        return (Customer) queue.deq();
+    }
+
     public boolean checkQueueFull() {
         return queue.isFull();
     }

@@ -7,3 +7,14 @@
  * @author Put Your Name (Lab Group)
  */
 
+class LastDigitsOfHashCode implements Transformer<Object, Integer> {
+    private int k;
+    public LastDigitsOfHashCode(Integer k) {
+        this.k = k;
+    }
+
+    @Override
+    public Integer transform(Object obj) {
+        return Math.abs((int) (obj.hashCode() % Math.pow(10, k)));
+    }
+}
