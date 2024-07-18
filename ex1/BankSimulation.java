@@ -30,18 +30,14 @@ class BankSimulation extends Simulation {
   public BankSimulation(Scanner sc) {
     initEvents = new Event[sc.nextInt()];
     int numOfCounters = sc.nextInt();
-
-    available = new boolean[numOfCounters];
-    for (int i = 0; i < numOfCounters; i++) {
-      available[i] = true;
-    }
+    Bank bank = new Bank(numOfCounters);
 
     int id = 0;
     while (sc.hasNextDouble()) {
       double arrivalTime = sc.nextDouble();
       double serviceTime = sc.nextDouble();
-      Customer newCustomer = new Customer(id);
-      initEvents[id] = new Arrival(arrivalTime, newCustomer, serviceTime, available);
+      Customer newCustomer = new Customer(id, serviceTime);
+      initEvents[id] = new Arrival(arrivalTime, newCustomer, bank);
       id += 1;
     }
   }
