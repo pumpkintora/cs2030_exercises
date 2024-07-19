@@ -1,9 +1,10 @@
 class ServiceEnd extends BankEvent {
-    public ServiceEnd(double time, Customer customer, Counter counter) {
+    public ServiceEnd(double time, Customer customer, Counter counter, Bank bank) {
         // Call the constructor BankEvent(int, double, int)
         super(time);
         this.setCustomer(customer);
         this.setCounter(counter);
+        this.setBank(bank);
     }
 
     /**
@@ -15,7 +16,8 @@ class ServiceEnd extends BankEvent {
     @Override
     public String toString() {
         String str = "";
-        str = String.format(": Customer %d service done (by Counter %d)",
+        String serviceType = this.getCustomer().getTask() == 1 ? "withdrawal" : "deposit";
+        str = String.format(": C%d " + serviceType + " done (by S%d)",
                 this.getCustomer().getCustomerId(), this.getCounter().getCounterId());
         return super.toString() + str;
     }
@@ -33,7 +35,7 @@ class ServiceEnd extends BankEvent {
         // a departure event at the current time.
         this.getCounter().setAvailable(true);
         return new Event[] {
-                new Departure(this.getTime(), this.getCustomer()),
+                new Departure(this.getTime(), this.getCustomer(), this.getBank()),
         };
     }
 }

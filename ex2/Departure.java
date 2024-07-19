@@ -2,16 +2,17 @@ class Departure extends BankEvent {
     /**
      * Constructor for a bank event.
      *
-     * @param time       The time this event occurs.
+     * @param time     The time this event occurs.
      * @param customer The customer associated with this
-     *                   event.
+     *                 event.
      */
-    public Departure(double time, Customer customer) {
+    public Departure(double time, Customer customer, Bank bank) {
         // Call the constructor Event(double)
         super(time);
 
         // Initialize the fields
         this.setCustomer(customer);
+        this.setBank(bank);
     }
 
     /**
@@ -23,7 +24,7 @@ class Departure extends BankEvent {
     @Override
     public String toString() {
         String str = "";
-        str = String.format(": Customer %d departed", this.getCustomer().getCustomerId());
+        str = String.format(": C%d departed", this.getCustomer().getCustomerId());
         return super.toString() + str;
     }
 
@@ -35,6 +36,14 @@ class Departure extends BankEvent {
      */
     @Override
     public Event[] simulate() {
-        return new Event[] {};
+        if (this.getBank().checkQueueHasCustomer() && this.getBank().getAvailableCounter() != null) {
+            Counter availableCounter = this.getBank().getAvailableCounter();
+            Customer c = this.getBank().dequeueCustomer();
+            return new Event[]{
+                    new ServiceBegin(this.getTime(), c, availableCounter, this.getBank())
+            };
+        } else {
+            return new Event[]{};
+        }
     }
 }

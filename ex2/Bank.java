@@ -19,6 +19,10 @@ class Bank {
         return null;
     }
 
+    public String getQueue() {
+        return this.queue.toString();
+    }
+
     public void queueCustomer(Customer customer) {
         queue.enq(customer);
     }
@@ -29,6 +33,10 @@ class Bank {
 
     public boolean checkQueueFull() {
         return queue.isFull();
+    }
+
+    public boolean checkQueueHasCustomer() {
+        return !queue.isEmpty();
     }
 
     public Counter[] getCounters() {

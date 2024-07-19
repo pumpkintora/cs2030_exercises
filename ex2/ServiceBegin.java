@@ -3,13 +3,14 @@ class ServiceBegin extends BankEvent {
      * The id of a customer associated with this event.
      * First customer has id 0. Next is 1, 2, etc.
      */
-    public ServiceBegin(double time, Customer customer, Counter counter) {
+    public ServiceBegin(double time, Customer customer, Counter counter, Bank bank) {
         // Call the constructor ServiceBegin(int, double, int)
         super(time);
 
         // Initialize the fields
         this.setCustomer(customer);
         this.setCounter(counter);
+        this.setBank(bank);
     }
 
     /**
@@ -21,7 +22,8 @@ class ServiceBegin extends BankEvent {
     @Override
     public String toString() {
         String str = "";
-        str = String.format(": Customer %d service begin (by Counter %d)",
+        String serviceType = this.getCustomer().getTask() == 1 ? "withdrawal" : "deposit";
+        str = String.format(": C%d " + serviceType + " begin (by S%d)",
                 this.getCustomer().getCustomerId(), this.getCounter().getCounterId());
         return super.toString() + str;
     }
@@ -40,7 +42,7 @@ class ServiceBegin extends BankEvent {
         this.getCounter().setAvailable(false);
         double endTime = this.getTime() + this.getCustomer().getServiceTime();
         return new Event[] {
-                new ServiceEnd(endTime, this.getCustomer(), this.getCounter())
+                new ServiceEnd(endTime, this.getCustomer(), this.getCounter(), this.getBank())
         };
 
     }

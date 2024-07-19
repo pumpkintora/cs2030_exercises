@@ -28,7 +28,8 @@ class BankSimulation extends Simulation {
    *           pair represents a customer.
    */
   public BankSimulation(Scanner sc) {
-    initEvents = new Event[sc.nextInt()];
+    int numOfCustomers = sc.nextInt();
+    initEvents = new Event[numOfCustomers];
     int numOfCounters = sc.nextInt();
     int queueSize = sc.nextInt();
     Bank bank = new Bank(numOfCounters, queueSize);
@@ -37,7 +38,8 @@ class BankSimulation extends Simulation {
     while (sc.hasNextDouble()) {
       double arrivalTime = sc.nextDouble();
       double serviceTime = sc.nextDouble();
-      Customer newCustomer = new Customer(id, serviceTime);
+      int taskType = sc.nextInt();
+      Customer newCustomer = new Customer(id, serviceTime, taskType);
       initEvents[id] = new Arrival(arrivalTime, newCustomer, bank);
       id += 1;
     }

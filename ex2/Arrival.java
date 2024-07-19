@@ -20,7 +20,8 @@ class Arrival extends BankEvent {
     @Override
     public String toString() {
         String str = "";
-        str = String.format(": Customer %d arrives", this.getCustomer().getCustomerId());
+        String queue = this.getBank().getQueue();
+        str = String.format(": C%d arrived " + queue, this.getCustomer().getCustomerId());
         return super.toString() + str;
     }
 
@@ -37,14 +38,16 @@ class Arrival extends BankEvent {
         if (this.getBank().getAvailableCounter() != null) {
             Counter availableCounter = this.getBank().getAvailableCounter();
             return new Event[] {
-                    new ServiceBegin(this.getTime(), this.getCustomer(), availableCounter)
+                    new ServiceBegin(this.getTime(), this.getCustomer(), availableCounter, this.getBank())
             };
         } else {
             if (!this.getBank().checkQueueFull()) {
-
+                return new Event[] {
+                        new JoinQueue(this.getTime(), this.getCustomer(), this.getBank())
+                };
             }
             return new Event[] {
-                    new Departure(this.getTime(), this.getCustomer())
+                    new Departure(this.getTime(), this.getCustomer(), this.getBank())
             };
         }
     }
