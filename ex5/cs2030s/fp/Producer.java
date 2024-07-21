@@ -4,3 +4,9 @@
  *
  * @author Put Your Name (Lab Group)
  */
+
+package cs2030s.fp;
+
+public interface Producer<T> {
+    T produce();
+}
