@@ -3,38 +3,37 @@ import cs2030s.fp.Transformer;
 import java.util.Map;
 
 class Ex5 {
-  public static String getGrade(String student, String module, String assessment,
-      Map<String, Map<String, Map<String, String>>> db) {
-    Map<String, Map<String, String>> std = db.get(student);
-    if (std == null) {
-      return "No such entry";
-    } else {
-      Map<String, String> mod = std.get(module);
-      if (mod == null) {
-        return "No such entry";
-      } else {
-        String grade = mod.get(assessment);
-        if (grade == null) {
-          return "No such entry";
-        }
-        return grade;
-      }
-    }
-  }
+//  public static String getGrade(String student, String module, String assessment,
+//      Map<String, Map<String, Map<String, String>>> db) {
+//    Map<String, Map<String, String>> std = db.get(student);
+//    if (std == null) {
+//      return "No such entry";
+//    } else {
+//      Map<String, String> mod = std.get(module);
+//      if (mod == null) {
+//        return "No such entry";
+//      } else {
+//        String grade = mod.get(assessment);
+//        if (grade == null) {
+//          return "No such entry";
+//        }
+//        return grade;
+//      }
+//    }
+//  }
 
   /*
    * Use this skeleton to replace getGrade
-   *
+   */
   public static String getGrade(String student, String module, String assessment,
       Map<String, Map<String, Map<String, String>>> map) {
 
-    Transformer<Map<String, Map<String, String>>, Maybe<Map<String, String>>> getModule = ..
+    Transformer<Map<String, Map<String, String>>, Maybe<Map<String, String>>> getModule = (std) -> Maybe.of(std.get(module));
 
-    Transformer<Map<String, String>, Maybe<String>> getAssessment = ..
+    Transformer<Map<String, String>, Maybe<String>> getAssessment = (mod) -> Maybe.of(mod.get(assessment));
 
-    return Maybe...;
+    return Maybe.of(map.get(student)).flatMap(getModule).flatMap(getAssessment).orElse("No such entry");
   }
-  */
 
   public static void main(String[] args) {
     Map<String, Map<String, Map<String, String>>> students =
